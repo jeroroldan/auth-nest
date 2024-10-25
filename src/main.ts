@@ -3,7 +3,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: false });
+  const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'http://localhost:4200', // Allow requests from this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed methods
+    credentials: true, // Allow credentials if needed
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
